@@ -1,0 +1,235 @@
+import { DataGrid } from "@mui/x-data-grid";
+import Paper from "@mui/material/Paper";
+import { useContext, useState } from "react";
+import { ContextCategories } from "../../../../contexts/CategoryProvider";
+import { Button } from "@mui/material";
+import { FaRegEdit } from "react-icons/fa";
+import { FaTrashCan } from "react-icons/fa6";
+import ModalDelete from "../../../../components/admin/ModalDelete";
+import { deleteDocument } from "../../../../services/firebaseService";
+
+const paginationModel = { page: 0, pageSize: 5 };
+
+export default function TableCategories({ hanleEdit }) {
+  const [open, setOpen] = useState(false);
+  const [idDeleted, setIdDeleted] = useState(null);
+  const categories = useContext(ContextCategories);
+  const handleClickOpen = (id) => {
+    setOpen(true);
+    setIdDeleted(id);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDeleted = async () => {
+    await deleteDocument("Categories", idDeleted);
+    handleClose();
+  };
+
+  const columns = [
+    {
+      field: "index",
+      headerName: "ID",
+      width: 80,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "description",
+      headerName: "Description",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      flex: 1,
+      headerAlign: "center",
+      sortable: false,
+      align: "center",
+      renderCell: (params) => (
+        <div className="flex gap-3 items-center justify-center h-full">
+          <Button
+            sx={{
+              minWidth: 0,
+              bgcolor: "#3b82f6",
+              p: {
+                xs: "8px",
+                sm: "10px",
+              },
+            }}
+            onClick={() => hanleEdit(params.row)}
+          >
+            <FaRegEdit size={window.innerWidth < 600 ? 20 : 16} color="white" />
+          </Button>
+
+          <Button
+            sx={{
+              minWidth: 0,
+              backgroundColor: "#ef4444",
+              p: {
+                xs: "8px",
+                sm: "10px",
+              },
+            }}
+            onClick={() => handleClickOpen(params.row.id)}
+          >
+            <FaTrashCan
+              size={window.innerWidth < 600 ? 20 : 16}
+              color="white"
+            />
+          </Button>
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <div className="mt-5">
+      <Paper
+        sx={{
+          position: "relative",
+          overflow: "hidden",
+          borderRadius: 4,
+          background: "rgba(15, 23, 42, 0.85)",
+          backdropFilter: "blur(20px)",
+          border: "1px solid rgba(255,255,255,0.08)",
+
+          "&::before, &::after": {
+            content: '""',
+            position: "absolute",
+            zIndex: 0,
+          },
+          "&::before": {
+            inset: 0,
+            background:
+              "radial-gradient(circle at top, rgba(255,0,102,0.25), transparent 40%), radial-gradient(circle at bottom, rgba(99,102,241,0.2), transparent 50%)",
+            pointerEvents: "none",
+          },
+          "&::after": {
+            top: 0,
+            right: 0,
+            width: 2,
+            height: "100%",
+            background:
+              "linear-gradient(to bottom, transparent, #ff0055, #7c3aed, transparent)",
+            boxShadow: "0 0 10px #ff0055, 0 0 20px #7c3aed",
+          },
+          "& .MuiDataGrid-root, & .MuiDataGrid-main": {
+            border: "none",
+            overflow: "hidden",
+            borderRadius: "inherit",
+          },
+        }}
+      >
+        <DataGrid
+          columns={columns}
+          rows={categories.map((p, index) => ({
+            ...p,
+            index: index + 1,
+          }))}
+          initialState={{ pagination: { paginationModel } }}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection
+          disableRowSelectionOnClick
+          sx={{
+            position: "relative",
+            zIndex: 1,
+            color: "#e2e8f0",
+            bgcolor: "transparent",
+
+            "& .MuiDataGrid-root, \
+       .MuiDataGrid-main, \
+       .MuiDataGrid-virtualScroller, \
+       .MuiDataGrid-filler": {
+              bgcolor: "transparent",
+            },
+
+            "& .MuiDataGrid-columnHeaders": {
+              bgcolor: "rgba(255,255,255,.02)",
+              backdropFilter: "blur(10px)",
+              borderBottom: "1px solid rgba(255,255,255,.08)",
+            },
+
+            "& .MuiDataGrid-columnHeader": {
+              bgcolor: "transparent",
+            },
+
+            "& .MuiDataGrid-columnHeaderTitle": {
+              color: "#f8fafc",
+              fontWeight: 600,
+            },
+
+            "& .MuiDataGrid-cell": {
+              color: "inherit",
+              borderBottom: "1px solid rgba(255,255,255,.05)",
+            },
+
+            "& .MuiDataGrid-row:hover": {
+              bgcolor: "rgba(255,0,102,.08)",
+            },
+
+            "& .MuiDataGrid-row.Mui-selected": {
+              bgcolor: "rgba(255,0,102,.15) !important",
+            },
+
+            "& .MuiDataGrid-row.Mui-selected:hover": {
+              bgcolor: "rgba(255,0,102,.22) !important",
+            },
+
+            "& .MuiDataGrid-footerContainer": {
+              bgcolor: "rgba(255,255,255,.02)",
+              borderTop: "1px solid rgba(255,255,255,.08)",
+            },
+
+            "& .MuiTablePagination-root, \
+       .MuiTablePagination-toolbar, \
+       .MuiTablePagination-selectLabel, \
+       .MuiTablePagination-displayedRows, \
+       .MuiTablePagination-select, \
+       .MuiSvgIcon-root": {
+              color: "#f8fafc",
+            },
+
+            "& .MuiCheckbox-root": {
+              color: "rgba(255,255,255,.4)",
+            },
+
+            "& .MuiCheckbox-root.Mui-checked": {
+              color: "#ff0055",
+            },
+
+            "& .MuiDataGrid-menuIconButton": {
+              color: "#fff",
+            },
+
+            "& .MuiDataGrid-sortIcon": {
+              color: "#fff",
+            },
+
+            "& .MuiDataGrid-columnHeader:focus, \
+       .MuiDataGrid-cell:focus": {
+              outline: "none",
+              boxShadow: "none",
+            },
+          }}
+        />
+      </Paper>
+      <ModalDelete
+        open={open}
+        handleClose={handleClose}
+        handleDeleted={handleDeleted}
+      />
+    </div>
+  );
+}
