@@ -9,7 +9,7 @@ const HomeAdmin = () => {
         <NoelBackground />
         <div className='md:flex'>
            <NavbarAdmin/>
-      <div className="flex-1">
+      <div className="flex-1 min-w-0 overflow-hidden">
            <HeaderAdmin/>
            <AdminRouters />
       </div>

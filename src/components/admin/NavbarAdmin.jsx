@@ -30,7 +30,7 @@ const NavbarAdmin = () => {
           <MdDashboard />
           {showMenu && <span>Dashboard</span>}
         </Link>
-        <div className=" flex flex-col gap-2 mt-2">
+        <div className=" flex flex-col gap-2 mt-2 max-md:pb-4">
           {LISTMENU.map((e, index) => (
             <div key={index} className="mt-2 relative">
               <div
@@ -38,11 +38,11 @@ const NavbarAdmin = () => {
                 className="group px-3 py-2 bg-white/4 hover:bg-white/8 border border-white/5 rounded-2xl flex items-center gap-2 text-slate-300 hover:text-white cursor-pointer transition-all duration-300"
               >
                 {e.icon}
-               {showMenu && (
+                {showMenu && (
                   <span className="flex items-center gap-1.5 text-nowrap ">
                     {e.title}
                   </span>
-                )} 
+                )}
                 {show == index ? (
                   <FaCaretDown className="ml-auto" />
                 ) : (
@@ -50,7 +50,7 @@ const NavbarAdmin = () => {
                 )}
               </div>
               <div
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${show === index ? `${showMenu ? "mt-2" : " mt-2 md:absolute -right-2 top-0 md:translate-x-full"}` : "hidden"}`}
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${show === index ? `opacity-100 visible ${showMenu ? "mt-2 relative" : "md:absolute md:left-full md:top-0 md:ml-2 md:min-w-max z-50 mt-0 "}` : "opacity-0 invisible pointer-events-none max-h-0"}`}
               >
                 {e.subMenu.map((item, i) => (
                   <Link
@@ -65,9 +65,7 @@ const NavbarAdmin = () => {
             </div>
           ))}
           {showMenu && <span className=" capitalize text-white ">pages</span>}
-          <div
-            className="px-3 py-2 gap-2 rounded-2xl flex items-center gap-2bg-linear-to-r from-pink-500/20 to-violet-500/20 border border-pink-500/30 text-white shadow-[0_0_20px_rgba(236,72,153,0.2)]"
-          >
+          <div className="px-3 py-2 gap-2 rounded-2xl flex items-center gap-2bg-linear-to-r from-pink-500/20 to-violet-500/20 border border-pink-500/30 text-white shadow-[0_0_20px_rgba(236,72,153,0.2)]">
             <FaUser />
             {showMenu && (
               <span className="flex items-center gap-1.5">User Pages</span>

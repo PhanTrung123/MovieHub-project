@@ -34,3 +34,4 @@ export default function ModalDelete({ open, handleClose, handleDeleted }) {
     </React.Fragment>
   );
 }
+

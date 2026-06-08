@@ -3,6 +3,7 @@ import Movies from "../pages/admin/media_management/movies/Movies";
 import Sections from "../pages/admin/media_management/sections/Sections";
 import Dashboard from "../pages/admin/dashboard/Dashboard";
 import Categories from "../pages/admin/metadata/categories/Categories";
+import Authors from "../pages/admin/cast_crew/authors/Authors";
 function AdminRouters() {
   const routers = [
     {
@@ -20,6 +21,10 @@ function AdminRouters() {
      {
       path: "/admin/categories",
       element: <Categories />,
+    },
+     {
+      path: "/admin/authors",
+      element: <Authors />,
     },
   ];
   return (

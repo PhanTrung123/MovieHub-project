@@ -4,13 +4,16 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import CategoryProvider from './contexts/CategoryProvider.jsx'
+import AuthorProvider from './contexts/AuthorProvider.jsx'
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter> 
-    <CategoryProvider>
-    <App />
-    </CategoryProvider>
+    <BrowserRouter>
+      <CategoryProvider>
+        <AuthorProvider>
+          <App />
+        </AuthorProvider>
+      </CategoryProvider>
     </BrowserRouter>
-  </StrictMode>,
-)
+  </StrictMode>
+);

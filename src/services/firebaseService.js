@@ -1,10 +1,21 @@
 import { addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
+import { uploadImageToCloudinary } from "../config/cloudyConnfig";
 
 export const addDocument = async (collectionName, values) => {
   try {
     let newValues = { ...values };
 
+    // 1. upload ảnh trước
+    if (newValues.imgUrl && newValues.imgUrl.startsWith("data:image")) {
+      const imgUrl = await uploadImageToCloudinary(
+        newValues.imgUrl,
+        collectionName
+      );
+      newValues.imgUrl = imgUrl;
+    }
+
+    // 2. rồi mới add Firestore
     const docRef = await addDoc(
       collection(db, collectionName),
       newValues

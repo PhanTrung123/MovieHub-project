@@ -1,19 +1,19 @@
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import { useContext, useMemo, useState } from "react";
-import { ContextCategories } from "../../../../contexts/CategoryProvider";
 import { Button } from "@mui/material";
 import { FaRegEdit } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 import ModalDelete from "../../../../components/admin/ModalDelete";
 import { deleteDocument } from "../../../../services/firebaseService";
+import { ContextAuthors } from "../../../../contexts/AuthorProvider";
 
 const paginationModel = { page: 0, pageSize: 5 };
 
-export default function TableCategories({ hanleEdit, search }) {
+export default function TableAuthors({ hanleEdit, search }) {
   const [open, setOpen] = useState(false);
   const [idDeleted, setIdDeleted] = useState(null);
-  const categories = useContext(ContextCategories);
+  const authors = useContext(ContextAuthors);
   const handleClickOpen = (id) => {
     setOpen(true);
     setIdDeleted(id);
@@ -24,7 +24,7 @@ export default function TableCategories({ hanleEdit, search }) {
   };
 
   const handleDeleted = async () => {
-    await deleteDocument("Categories", idDeleted);
+    await deleteDocument("Authors", idDeleted);
     handleClose();
   };
 
@@ -49,6 +49,36 @@ export default function TableCategories({ hanleEdit, search }) {
       flex: 1,
       headerAlign: "center",
       align: "center",
+    },
+    {
+      field: "imgUrl",
+      headerName: "Image",
+      flex: 1,
+      minWidth: 140,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params) => (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <img
+            src={params.value}
+            style={{
+              width: 45,
+              height: 45,
+              borderRadius: 10,
+              objectFit: "cover",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+            }}
+          />
+        </div>
+      ),
     },
     {
       field: "action",
@@ -94,10 +124,10 @@ export default function TableCategories({ hanleEdit, search }) {
     },
   ];
   const dataSearch = useMemo(() => {
-    return categories.filter((e) =>
+    return authors.filter((e) =>
       e.name.toLowerCase().includes(search.toLowerCase()),
     );
-  }, [categories, search]);
+  }, [authors, search]);
 
   return (
     <div className="mt-5">

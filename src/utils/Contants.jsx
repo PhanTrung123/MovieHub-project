@@ -77,3 +77,6 @@ export const LISTMENU = [
     ],
   }
 ];
+
+export const CLOUNDNAME = 'dimz62amt';
+export const UPLOADRESET = 'moviehub';

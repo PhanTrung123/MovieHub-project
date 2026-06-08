@@ -11,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ModalCategory({category, open, handleClose, hanleChangeInput, addCategory  }) {
+export default function ModalCategory({category, open, handleClose, hanleChangeInput, addCategory, error  }) {
   return (
     <React.Fragment>
       <Dialog
@@ -34,6 +34,8 @@ export default function ModalCategory({category, open, handleClose, hanleChangeI
             sx={{ mt : 2 }}
             onChange={hanleChangeInput}
             value={category.name}
+             error={!!error.name}
+            helperText={error.name}
           />
           <TextField
             label="Description"
@@ -44,13 +46,16 @@ export default function ModalCategory({category, open, handleClose, hanleChangeI
             onChange={hanleChangeInput}
             rows={3}
             value={category.description}
+            error={!!error.description}
+            helperText={error.description}
+
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} autoFocus>
+          <Button  variant="contained" color="error"  onClick={handleClose} autoFocus>
             Cancel
           </Button>
-          <Button onClick={addCategory}>{category.id ? "EDIT" : "ADD"}</Button>
+          <Button variant="contained" color="primary" onClick={addCategory}>{category.id ? "EDIT" : "ADD"}</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
