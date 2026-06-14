@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { fetchDocumentsRealtime } from "../services/firebaseService";
 export const ContextCategories = createContext();
 

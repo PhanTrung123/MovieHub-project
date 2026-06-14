@@ -1,11 +1,107 @@
-import React from 'react';
+import { useState } from "react";
+import SearchAdmin from "../../../../components/admin/SearchAdmin";
+import ModalMovie from "./ModalMovie";
+import {
+  addDocument,
+  updateDocument,
+} from "../../../../services/firebaseService";
 
-function Movies(props) {
-    return (
-        <div>
-            Movies
-        </div>
-    );
+const innnerMovie = {
+  name: "",
+  description: "",
+  duration: "",
+  listCate: "",
+  country: "",
+  author: "",
+  listActor: "",
+  listCharacter: "",
+  planID: "",
+  typeID: "",
+  rent: "",
+  imgUrl: "/logo.png",
+};
+function Movies() {
+  const [open, setOpen] = useState(false);
+  const [movie, setMovie] = useState(innnerMovie);
+  const [error, setError] = useState(innnerMovie);
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const validation = () => {
+    const newError = {
+      name: movie.name?.trim() ? "" : "Please enter movie name",
+      description: movie.description?.trim() ? "" : "Please enter description",
+      duration: movie.duration ? "" : "Please enter duration",
+      plan: movie.plan ? "" : "Please select a plan",
+      type: movie.type ? "" : "Please select movie type",
+      author: movie.author ? "" : "Please select an author",
+      country: movie.country ? "" : "Please select a country",
+      listCategories:
+        movie.listCategories?.length > 0
+          ? ""
+          : "Please select at least one category",
+      listActor:
+        movie.listActor?.length > 0 ? "" : "Please select at least one actor",
+      listCharacter:
+        movie.listCharacter?.length > 0
+          ? ""
+          : "Please select at least one character",
+      rent: movie.rent > 0 ? "" : "Please select a rent",
+      imgUrl: movie.imgUrl ? "" : "Please select an image",
+    };
+
+    setError(newError);
+
+    return Object.values(newError).some((e) => e !== "");
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+    setMovie(innnerMovie);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const hanleChangeInput = (e) => {
+    setMovie({ ...movie, [e.target.name]: e.target.value });
+  };
+
+  const addMovie = async () => {
+    if (validation()) {
+      return;
+    }
+    if (movie.id) {
+      await updateDocument("Movies", movie);
+    } else {
+      await addDocument("Movies", movie);
+    }
+    handleClose();
+  };
+  console.log(movie);
+
+  return (
+    <div className="p-5 max-md:p-0">
+      <SearchAdmin
+        handleSearch={handleSearch}
+        handleClickOpen={handleClickOpen}
+        title={"Movie"}
+      />
+      <ModalMovie
+        open={open}
+        handleClose={handleClose}
+        hanleChangeInput={hanleChangeInput}
+        addMovie={addMovie}
+        movie={movie}
+        error={error}
+        setMovie={setMovie}
+      />
+    </div>
+  );
 }
 
 export default Movies;

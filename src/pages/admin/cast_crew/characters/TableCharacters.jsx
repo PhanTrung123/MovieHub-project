@@ -1,19 +1,19 @@
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import { useContext, useMemo, useState } from "react";
-import { ContextCategories } from "../../../../contexts/CategoryProvider";
-import {  Chip, IconButton, Tooltip } from "@mui/material";
+import { Button } from "@mui/material";
 import { FaRegEdit } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 import ModalDelete from "../../../../components/admin/ModalDelete";
 import { deleteDocument } from "../../../../services/firebaseService";
+import { ContextCharacters } from "../../../../contexts/CharacterProvider";
 
 const paginationModel = { page: 0, pageSize: 5 };
 
-export default function TableCategories({ hanleEdit, search }) {
+export default function TableCharacters({ hanleEdit, search }) {
   const [open, setOpen] = useState(false);
   const [idDeleted, setIdDeleted] = useState(null);
-  const categories = useContext(ContextCategories);
+  const characters = useContext(ContextCharacters);
   const handleClickOpen = (id) => {
     setOpen(true);
     setIdDeleted(id);
@@ -24,11 +24,9 @@ export default function TableCategories({ hanleEdit, search }) {
   };
 
   const handleDeleted = async () => {
-    await deleteDocument("Categories", idDeleted);
+    await deleteDocument("Characters", idDeleted);
     handleClose();
   };
-
-  const isMobile = window.innerWidth < 600;
 
   const columns = [
     {
@@ -37,116 +35,99 @@ export default function TableCategories({ hanleEdit, search }) {
       width: 80,
       headerAlign: "center",
       align: "center",
-      renderCell: (params) => (
-        <Chip
-          label={params.value}
-          size="small"
-          sx={{
-            bgcolor: "rgba(99,102,241,0.2)",
-            color: "#a5b4fc",
-            fontWeight: 600,
-            border: "1px solid rgba(99,102,241,0.4)",
-          }}
-        />
-      ),
     },
-
     {
       field: "name",
       headerName: "Name",
-      flex: isMobile ? 1.2 : 1,
-      minWidth: isMobile ? 120 : 180,
+      flex: 1,
       headerAlign: "center",
-      align: "left",
-      renderCell: (params) => (
-        <div
-          style={{
-            fontWeight: 600,
-            color: "#f8fafc",
-            fontSize: 14,
-          }}
-        >
-          {params.value}
-        </div>
-      ),
+      align: "center",
     },
-
     {
       field: "description",
       headerName: "Description",
-      flex: isMobile ? 2 : 3,
-      minWidth: isMobile ? 160 : 300,
+      flex: 1,
       headerAlign: "center",
-      align: "left",
+      align: "center",
+    },
+    {
+      field: "imgUrl",
+      headerName: "Image",
+      flex: 1,
+      minWidth: 140,
+      headerAlign: "center",
+      align: "center",
       renderCell: (params) => (
         <div
           style={{
-            display: "-webkit-box",
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            color: "#cbd5e1",
-            fontSize: 13,
-            lineHeight: 1.4,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
           }}
         >
-          {params.value}
+          <img
+            src={params.value}
+            style={{
+              width: 45,
+              height: 45,
+              borderRadius: 10,
+              objectFit: "cover",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+            }}
+          />
         </div>
       ),
     },
-
     {
       field: "action",
       headerName: "Action",
-      width: isMobile ? 120 : 160,
+      flex: 1,
       headerAlign: "center",
       sortable: false,
       align: "center",
       renderCell: (params) => (
-        <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
-          <Tooltip title="Edit">
-            <IconButton
-              onClick={() => hanleEdit(params.row)}
-              sx={{
-                bgcolor: "rgba(59,130,246,0.15)",
-                color: "#60a5fa",
-                border: "1px solid rgba(59,130,246,0.3)",
-                "&:hover": {
-                  bgcolor: "rgba(59,130,246,0.35)",
-                  boxShadow: "0 0 12px rgba(59,130,246,0.4)",
-                },
-              }}
-            >
-              <FaRegEdit size={16} />
-            </IconButton>
-          </Tooltip>
+        <div className="flex gap-3 items-center justify-center h-full">
+          <Button
+            sx={{
+              minWidth: 0,
+              bgcolor: "#3b82f6",
+              p: {
+                xs: "8px",
+                sm: "10px",
+              },
+            }}
+            onClick={() => hanleEdit(params.row)}
+          >
+            <FaRegEdit size={window.innerWidth < 600 ? 20 : 16} color="white" />
+          </Button>
 
-          <Tooltip title="Delete">
-            <IconButton
-              onClick={() => handleClickOpen(params.row.id)}
-              sx={{
-                bgcolor: "rgba(239,68,68,0.15)",
-                color: "#f87171",
-                border: "1px solid rgba(239,68,68,0.3)",
-                "&:hover": {
-                  bgcolor: "rgba(239,68,68,0.35)",
-                  boxShadow: "0 0 12px rgba(239,68,68,0.4)",
-                },
-              }}
-            >
-              <FaTrashCan size={16} />
-            </IconButton>
-          </Tooltip>
+          <Button
+            sx={{
+              minWidth: 0,
+              backgroundColor: "#ef4444",
+              p: {
+                xs: "8px",
+                sm: "10px",
+              },
+            }}
+            onClick={() => handleClickOpen(params.row.id)}
+          >
+            <FaTrashCan
+              size={window.innerWidth < 600 ? 20 : 16}
+              color="white"
+            />
+          </Button>
         </div>
       ),
     },
   ];
   const dataSearch = useMemo(() => {
-    return categories.filter((e) =>
+    return characters.filter((e) =>
       e.name.toLowerCase().includes(search.toLowerCase()),
     );
-  }, [categories, search]);
+  }, [characters, search]);
 
   return (
     <div className="mt-5">
@@ -183,26 +164,6 @@ export default function TableCategories({ hanleEdit, search }) {
             border: "none",
             overflow: "hidden",
             borderRadius: "inherit",
-          },
-          "& .MuiDataGrid-columnSeparator": {
-            display: "none",
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            borderBottom: "none",
-          },
-
-          "& .MuiDataGrid-columnHeader": {
-            position: "relative",
-            borderRight: "1px solid rgba(255,255,255,0.06)",
-          },
-
-          "& .MuiDataGrid-columnHeader:last-child": {
-            borderRight: "none",
-          },
-
-          "& .MuiDataGrid-columnHeaderTitle": {
-            fontSize: "13px",
-            letterSpacing: "0.5px",
           },
         }}
       >
@@ -245,8 +206,6 @@ export default function TableCategories({ hanleEdit, search }) {
 
             "& .MuiDataGrid-cell": {
               borderBottom: "1px solid rgba(255,255,255,.05)",
-              display: "flex",
-              alignItems: "center",
             },
 
             "& .MuiDataGrid-row:hover": {

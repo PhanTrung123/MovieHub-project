@@ -1,19 +1,19 @@
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import { useContext, useMemo, useState } from "react";
-import { ContextCategories } from "../../../../contexts/CategoryProvider";
-import {  Chip, IconButton, Tooltip } from "@mui/material";
+import { Chip, IconButton, Tooltip } from "@mui/material";
 import { FaRegEdit } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 import ModalDelete from "../../../../components/admin/ModalDelete";
 import { deleteDocument } from "../../../../services/firebaseService";
+import { ContextMovieTypes } from "../../../../contexts/MovieTypeProvider";
 
 const paginationModel = { page: 0, pageSize: 5 };
 
 export default function TableCategories({ hanleEdit, search }) {
   const [open, setOpen] = useState(false);
   const [idDeleted, setIdDeleted] = useState(null);
-  const categories = useContext(ContextCategories);
+  const movieTypes = useContext(ContextMovieTypes);
   const handleClickOpen = (id) => {
     setOpen(true);
     setIdDeleted(id);
@@ -24,7 +24,7 @@ export default function TableCategories({ hanleEdit, search }) {
   };
 
   const handleDeleted = async () => {
-    await deleteDocument("Categories", idDeleted);
+    await deleteDocument("Movie_types", idDeleted);
     handleClose();
   };
 
@@ -143,10 +143,10 @@ export default function TableCategories({ hanleEdit, search }) {
     },
   ];
   const dataSearch = useMemo(() => {
-    return categories.filter((e) =>
+    return movieTypes.filter((e) =>
       e.name.toLowerCase().includes(search.toLowerCase()),
     );
-  }, [categories, search]);
+  }, [movieTypes, search]);
 
   return (
     <div className="mt-5">

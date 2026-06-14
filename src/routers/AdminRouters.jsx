@@ -4,6 +4,10 @@ import Sections from "../pages/admin/media_management/sections/Sections";
 import Dashboard from "../pages/admin/dashboard/Dashboard";
 import Categories from "../pages/admin/metadata/categories/Categories";
 import Authors from "../pages/admin/cast_crew/authors/Authors";
+import Characters from "../pages/admin/cast_crew/characters/Characters";
+import Actors from "../pages/admin/cast_crew/actors/Actors";
+import Plans from "../pages/admin/vip/plans/plans";
+import MovieTypes from "../pages/admin/metadata/movie_type/MovieType"
 function AdminRouters() {
   const routers = [
     {
@@ -18,14 +22,30 @@ function AdminRouters() {
       path: "/admin/movies",
       element: <Movies />,
     },
-     {
+    {
       path: "/admin/categories",
       element: <Categories />,
     },
-     {
+    {
       path: "/admin/authors",
       element: <Authors />,
     },
+    {
+      path: "/admin/characters",
+      element: <Characters />,
+    },
+    {
+      path: "/admin/actors",
+      element: <Actors />,
+    },
+    {
+      path: "/admin/plans",
+      element: <Plans />
+    },
+    {
+      path: "/admin/movie_types",
+      element: <MovieTypes />
+    }
   ];
   return (
     <Routes>
