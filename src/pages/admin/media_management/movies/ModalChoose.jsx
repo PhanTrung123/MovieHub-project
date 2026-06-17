@@ -39,7 +39,7 @@ export default function ModalChoose({
             {dataChoose.map((e) => (
               <div
                 key={e.id}
-                onClick={() => handleChooes(e.id)}
+                onClick={() => handleChooes(e.id,type)}
                 className={`inline-flex items-center flex-col px-4 py-2 border border-gray-400 rounded-md cursor-pointer w-fit whitespace-nowrap ${checkChoose(e.id) ? "bg-[#0A0E17] card-active text-white" : "bg-gray-200"}`}
               >
                 {type !== "categories" && (

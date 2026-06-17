@@ -184,21 +184,6 @@ export default function TableCategories({ hanleEdit, search }) {
             overflow: "hidden",
             borderRadius: "inherit",
           },
-          "& .MuiDataGrid-columnSeparator": {
-            display: "none",
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            borderBottom: "none",
-          },
-
-          "& .MuiDataGrid-columnHeader": {
-            position: "relative",
-            borderRight: "1px solid rgba(255,255,255,0.06)",
-          },
-
-          "& .MuiDataGrid-columnHeader:last-child": {
-            borderRight: "none",
-          },
 
           "& .MuiDataGrid-columnHeaderTitle": {
             fontSize: "13px",
@@ -214,8 +199,8 @@ export default function TableCategories({ hanleEdit, search }) {
           }))}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
-          checkboxSelection
-          disableRowSelectionOnClick
+           checkboxSelection={false}
+           disableColumnResize
           sx={{
             position: "relative",
             zIndex: 1,

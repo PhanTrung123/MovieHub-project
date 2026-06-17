@@ -5,16 +5,17 @@ import {
   addDocument,
   updateDocument,
 } from "../../../../services/firebaseService";
+import TableMovie from "./TableMovie";
 
 const innnerMovie = {
   name: "",
   description: "",
   duration: "",
-  listCate: "",
+  listCate: [],
   country: "",
   author: "",
-  listActor: "",
-  listCharacter: "",
+  listActor: [],
+  listCharacter: [],
   planID: "",
   typeID: "",
   rent: "",
@@ -35,12 +36,12 @@ function Movies() {
       name: movie.name?.trim() ? "" : "Please enter movie name",
       description: movie.description?.trim() ? "" : "Please enter description",
       duration: movie.duration ? "" : "Please enter duration",
-      plan: movie.plan ? "" : "Please select a plan",
-      type: movie.type ? "" : "Please select movie type",
+      planID: movie.planID ? "" : "Please select a plan",
+      typeID: movie.typeID ? "" : "Please select movie type",
       author: movie.author ? "" : "Please select an author",
       country: movie.country ? "" : "Please select a country",
-      listCategories:
-        movie.listCategories?.length > 0
+      listCate:
+        movie.listCate?.length > 0
           ? ""
           : "Please select at least one category",
       listActor:
@@ -72,7 +73,10 @@ function Movies() {
   };
 
   const addMovie = async () => {
+
     if (validation()) {
+      console.log(error);
+      
       return;
     }
     if (movie.id) {
@@ -82,7 +86,22 @@ function Movies() {
     }
     handleClose();
   };
-  console.log(movie);
+  
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setMovie({ ...movie, imgUrl: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+   const handleEdit = (row) => {
+    handleClickOpen();
+    setMovie(row);
+  };
 
   return (
     <div className="p-5 max-md:p-0">
@@ -96,10 +115,12 @@ function Movies() {
         handleClose={handleClose}
         hanleChangeInput={hanleChangeInput}
         addMovie={addMovie}
+        handleImageChange={handleImageChange}
         movie={movie}
         error={error}
         setMovie={setMovie}
       />
+      <TableMovie handleEdit={handleEdit} search={search} />
     </div>
   );
 }

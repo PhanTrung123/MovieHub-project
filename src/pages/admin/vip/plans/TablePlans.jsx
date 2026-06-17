@@ -45,7 +45,7 @@ export default function TablePlan({ hanleEdit, search }) {
     },
     {
       field: "price",
-      headerName: "Price",
+      headerName: "Price (VND)",
       flex: 1,
       headerAlign: "center",
       align: "center",
@@ -153,8 +153,8 @@ export default function TablePlan({ hanleEdit, search }) {
           }))}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
-          checkboxSelection
-          disableRowSelectionOnClick
+           checkboxSelection={false}
+           disableColumnResize
           sx={{
             position: "relative",
             zIndex: 1,

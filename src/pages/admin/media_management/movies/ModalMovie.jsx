@@ -18,6 +18,8 @@ import { ContextCategories } from "../../../../contexts/CategoryProvider";
 import { ContextCharacters } from "../../../../contexts/CharacterProvider";
 import { ContextActors } from "../../../../contexts/ActorProvider";
 import { ContextMovieTypes } from "../../../../contexts/MovieTypeProvider";
+import { getOjectById } from "../../../../services/reponsitory";
+import { stylebg } from "../../../../utils/StyleContants";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -31,6 +33,7 @@ export default function ModalMovie({
   addMovie,
   error,
   setMovie,
+  handleImageChange,
 }) {
   const authors = React.useContext(ContextAuthors);
   const plans = React.useContext(ContextPlans);
@@ -71,7 +74,7 @@ export default function ModalMovie({
     setType(type);
   };
 
-  const handleChooes = (id) => {
+  const handleChooes = (id, type) => {
     switch (type) {
       case "categories":
         setMovie((pre) => {
@@ -126,7 +129,10 @@ export default function ModalMovie({
           {" "}
           {movie.id ? "Modal Edit Movie" : "Modal Add Movie"}
         </DialogTitle>
-        <DialogContent className="grid grid-cols-2 max-md:grid-cols-1 gap-3 ">
+        <DialogContent
+          sx={stylebg}
+          className="grid grid-cols-2 max-md:grid-cols-1 gap-3 "
+        >
           <div className="">
             <TextField
               label="Name"
@@ -161,6 +167,7 @@ export default function ModalMovie({
                 value={movie.duration}
                 error={!!error.duration}
                 helperText={error.duration}
+                
               />
               <TextField
                 label="Rent"
@@ -187,9 +194,15 @@ export default function ModalMovie({
                 variant="filled"
                 name="planID"
                 onChange={hanleChangeInput}
+                sx={{
+                  "& .MuiSelect-icon": {
+                    color: "#000",
+                  },
+                }}
+                value={movie.planID}
               >
                 {plans.map((option) => (
-                  <MenuItem value={option.id}>{option.title}</MenuItem>
+                  <MenuItem key={option.id} value={option.id}>{option.title}</MenuItem>
                 ))}
               </TextField>
               <TextField
@@ -198,6 +211,12 @@ export default function ModalMovie({
                 variant="filled"
                 name="typeID"
                 onChange={hanleChangeInput}
+                value={movie.typeID}
+                 sx={{
+                  "& .MuiSelect-icon": {
+                    color: "#000",
+                  },
+                }}
               >
                 {movieTypes.map((option) => (
                   <MenuItem key={option.id} value={option.id}>
@@ -212,9 +231,15 @@ export default function ModalMovie({
                 variant="filled"
                 name="author"
                 onChange={hanleChangeInput}
+                value={movie.author}
+                 sx={{
+                  "& .MuiSelect-icon": {
+                    color: "#000",
+                  },
+                }}
               >
                 {authors.map((option) => (
-                  <MenuItem value={option.name}>{option.name}</MenuItem>
+                  <MenuItem key={option.id} value={option.id}>{option.name}</MenuItem>
                 ))}
               </TextField>
               <TextField
@@ -224,6 +249,12 @@ export default function ModalMovie({
                 variant="filled"
                 name="country"
                 onChange={hanleChangeInput}
+                value={movie.country}
+                 sx={{
+                  "& .MuiSelect-icon": {
+                    color: "#000",
+                  },
+                }}
               >
                 {LISTCOUNTRIES.map((option) => (
                   <MenuItem key={option.code} value={option.code}>
@@ -240,26 +271,27 @@ export default function ModalMovie({
                 <div
                   className="flex items-center gap-2 cursor-pointer"
                   onClick={() => handleDataChoose("categories")}
+                  value={movie.listCate}
                 >
-                  <h5>Categories</h5>
+                  <h5 className="text-black">Categories</h5>
                   <div className="px-3 py-2 rounded-[5px] bg-slate-900 text-white flex items-center">
                     <MdCategory />
                   </div>
                 </div>
                 <div className="flex gap-2 items-center mt-2">
-                  <div className="relative px-3 py-1 bg-gray-200 border border-gray-400 rounded-md">
-                    <span className="text-sm ">Thể thao</span>
-                    <button className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs font-bold">
-                      <IoClose />
-                    </button>
-                  </div>
-
-                  <div className="relative px-3 py-1 bg-gray-200 border border-gray-400 rounded-md">
-                    <span className="text-sm ">Gián điệp</span>
-                    <button className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs font-bold">
-                      <IoClose />
-                    </button>
-                  </div>
+                  {movie.listCate.map((id) => (
+                    <div className="relative px-3 py-1 bg-gray-200 border border-gray-400 rounded-md">
+                      <span className="text-sm font-medium text-black ">
+                        {getOjectById(categories, id).name}
+                      </span>
+                      <button
+                        onClick={() => handleChooes(id, "categories")}
+                        className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs font-bold"
+                      >
+                        <IoClose />
+                      </button>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -268,38 +300,30 @@ export default function ModalMovie({
                   className="flex items-center gap-2 cursor-pointer"
                   onClick={() => handleDataChoose("actors")}
                 >
-                  <h5>Actors</h5>
+                  <h5 className="text-black">Actors</h5>
                   <div className="px-3 py-2 rounded-[5px] bg-slate-900 text-white flex items-center">
                     <FaUser />
                   </div>
                 </div>
                 <div className="flex gap-2 items-center justify-start mt-3">
-                  <div className="relative inline-block">
-                    <div className="w-10 h-10 rounded-full overflow-hidden  bg-gray-200">
-                      <img
-                        src="/logo.png"
-                        alt="image-actor"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                  {movie.listActor.map((id) => (
+                    <div className="relative inline-block">
+                      <div className="w-10 h-10 rounded-full overflow-hidden  bg-gray-200">
+                        <img
+                          src={getOjectById(actors, id).imgUrl}
+                          alt="image-actor"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
 
-                    <button className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs font-bold">
-                      <IoClose />
-                    </button>
-                  </div>
-                  <div className="relative inline-block">
-                    <div className="w-10 h-10 rounded-full overflow-hidden  bg-gray-200">
-                      <img
-                        src="/logo.png"
-                        alt="image-actor"
-                        className="w-full h-full object-cover"
-                      />
+                      <button
+                        onClick={() => handleChooes(id, "actors")}
+                        className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs font-bold"
+                      >
+                        <IoClose />
+                      </button>
                     </div>
-
-                    <button className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs font-bold">
-                      <IoClose />
-                    </button>
-                  </div>
+                  ))}
                 </div>
               </div>
 
@@ -308,89 +332,62 @@ export default function ModalMovie({
                   className="flex items-center gap-2"
                   onClick={() => handleDataChoose("characters")}
                 >
-                  <h5>Character</h5>
+                  <h5 className="text-black">Characters</h5>
                   <div className="px-3 py-2 rounded-[5px] bg-slate-900 text-white flex items-center">
                     <FaUser />
                   </div>
                 </div>
                 <div className="flex gap-2 items-center justify-start mt-3">
-                  <div className="relative inline-block">
-                    <div className="w-10 h-10 rounded-full overflow-hidden  bg-gray-200">
-                      <img
-                        src="/logo.png"
-                        alt="image-actor"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                  {movie.listCharacter.map((id) => (
+                    <div className="relative inline-block">
+                      <div className="w-10 h-10 rounded-full overflow-hidden  bg-gray-200">
+                        <img
+                          src={getOjectById(characters, id).imgUrl}
+                          alt="image-actor"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
 
-                    <button className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs font-bold">
-                      <IoClose />
-                    </button>
-                  </div>
-                  <div className="relative inline-block">
-                    <div className="w-10 h-10 rounded-full overflow-hidden  bg-gray-200">
-                      <img
-                        src="/logo.png"
-                        alt="image-actor"
-                        className="w-full h-full object-cover"
-                      />
+                      <button
+                        onClick={() => handleChooes(id, "characters")}
+                        className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs font-bold"
+                      >
+                        <IoClose />
+                      </button>
                     </div>
-
-                    <button className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs font-bold">
-                      <IoClose />
-                    </button>
-                  </div>
+                  ))}
                 </div>
               </div>
               <div className="mt-4 w-full">
-                <label>Upload image</label>
+                <label  className="text-black">Upload image</label>
                 <div className="flex items-center gap-3">
                   <label className="">
-                    <input type="file" accept="image/*" className="hidden" />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="hidden"
+                    />
                     <div className="px-4 py-2 mt-2 rounded-lg bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition">
                       Choose file
                     </div>
                   </label>
                   <span className="text-sm text-slate-500">
-                    {error.imgUrl ? (
-                      <span className="text-red-500">{error.imgUrl}</span>
-                    ) : (
-                      "No file selected"
-                    )}
+                    No file selected
                   </span>
                 </div>
               </div>
               <Box
                 sx={{
-                  mt: 2,
                   display: "flex",
                   justifyContent: "center",
                 }}
               >
-                <Box
-                  sx={{
-                    width: 220,
-                    height: 220,
-                    borderRadius: 3,
-                    overflow: "hidden",
-                    border: "1px solid #e2e8f0",
-                    backgroundColor: "#f8fafc",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    p: 1,
-                  }}
-                >
-                  <img
-                    src="/public/logo.png"
-                    alt="Preview"
-                    style={{
-                      maxWidth: "100%",
-                      maxHeight: "100%",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Box>
+                <img
+                  src={movie.imgUrl}
+                  alt="Preview"
+                  className="h-35 w-27 rounded-xl object-contain"
+                />
               </Box>
             </div>
           </div>

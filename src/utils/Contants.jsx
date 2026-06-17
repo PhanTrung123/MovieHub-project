@@ -1,5 +1,5 @@
-import { AiOutlinePicture, AiOutlineProfile } from "react-icons/ai";
-import { FaChromecast, FaUser, FaUsers } from "react-icons/fa";
+import { AiOutlinePicture} from "react-icons/ai";
+import { FaChromecast} from "react-icons/fa";
 import { IoHandLeftSharp } from "react-icons/io5";
 import { RiVipCrownFill } from "react-icons/ri";
 

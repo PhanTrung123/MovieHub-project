@@ -41,14 +41,14 @@ export default function TableCharacters({ hanleEdit, search }) {
       headerName: "Name",
       flex: 1,
       headerAlign: "center",
-      align: "center",
+       align: "left",
     },
     {
       field: "description",
       headerName: "Description",
       flex: 1,
       headerAlign: "center",
-      align: "center",
+       align: "left",
     },
     {
       field: "imgUrl",
@@ -175,8 +175,8 @@ export default function TableCharacters({ hanleEdit, search }) {
           }))}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
-          checkboxSelection
-          disableRowSelectionOnClick
+          checkboxSelection={false}
+          disableColumnResize
           sx={{
             position: "relative",
             zIndex: 1,
