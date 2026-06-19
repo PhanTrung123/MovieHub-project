@@ -10,6 +10,7 @@ import ActorProvider from "./contexts/ActorProvider.jsx";
 import PlanProvider from "./contexts/PlanProvider.jsx";
 import MovieTypeProvider from "./contexts/MovieTypeProvider.jsx";
 import MovieProvider from "./contexts/MovieProvider.jsx";
+import EpisodeProvider from "./contexts/EpisodeProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -21,7 +22,9 @@ createRoot(document.getElementById("root")).render(
               <PlanProvider>
                 <MovieTypeProvider>
                   <MovieProvider>
-                    <App />
+                    <EpisodeProvider>
+                      <App />
+                    </EpisodeProvider>
                   </MovieProvider>
                 </MovieTypeProvider>
               </PlanProvider>

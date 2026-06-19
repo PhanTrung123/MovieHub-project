@@ -6,6 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
+import { styleModalBg } from "../../../../utils/StyleModalContants";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -24,6 +25,7 @@ export default function ModalCategory({category, open, handleClose, hanleChangeI
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
         role="alertdialog"
+        sx={styleModalBg}
       >
         <DialogTitle>  {category.id ? "Modal Edit Category" : "Modal Add Category" }</DialogTitle>
         <DialogContent className="flex flex-col gap-3 ">

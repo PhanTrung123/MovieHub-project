@@ -8,6 +8,7 @@ import Characters from "../pages/admin/cast_crew/characters/Characters";
 import Actors from "../pages/admin/cast_crew/actors/Actors";
 import Plans from "../pages/admin/vip/plans/plans";
 import MovieTypes from "../pages/admin/metadata/movie_type/MovieType"
+import Episodes from "../pages/admin/media_management/episodes/Episodes";
 function AdminRouters() {
   const routers = [
     {
@@ -45,6 +46,10 @@ function AdminRouters() {
     {
       path: "/admin/movie_types",
       element: <MovieTypes />
+    },
+    {
+      path: "/admin/episodes",
+      element: <Episodes />
     }
   ];
   return (

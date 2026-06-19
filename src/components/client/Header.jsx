@@ -5,10 +5,11 @@ import { RiMenu2Fill } from "react-icons/ri";
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const [openList, setOpenList] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
   return (
-    <div className="px-4 py-2 flex items-center justify-between bg-black text-white relative">
+    <div className="px-4 w-full fixed py-2 flex z-10 items-center justify-between bg-black/60 text-white ">
       <div className="flex items-center gap-2">
         <div onClick={() => setOpen(!open)}>
           {open ? (
@@ -34,9 +35,22 @@ function Header() {
           <div className="mt-4">
             <ul className="grid grid-cols-2 gap-6 items-center capitalize">
               <li>Chủ đề</li>
-              <li className="flex items-center gap-1">
+              <li
+                onClick={() => setOpenList(!openList)}
+                className="relative flex items-center gap-1 cursor-pointer"
+              >
                 Thể loại
                 <FaCaretDown />
+                {openList && (
+                  <div className="absolute left-0 bottom-0 translate-y-full z-100 bg-amber-300 p-3  w-72 mt-4">
+                    <ul className="text-white gap-2 grid grid-cols-2">
+                      <li>the loai 1</li>
+                      <li>the loai 1</li>
+                      <li>the loai 1</li>
+                      <li>the loai 1</li>
+                    </ul>
+                  </div>
+                )}
               </li>
               <li>Phim lẻ</li>
               <li>Phim bộ</li>
@@ -63,9 +77,22 @@ function Header() {
       <div className="max-lg:hidden">
         <ul className="flex gap-6 items-center capitalize">
           <li>Chủ đề</li>
-          <li className="flex items-center gap-1">
+          <li
+            onClick={() => setOpenList(!openList)}
+            className="relative flex items-center gap-1 cursor-pointer"
+          >
             Thể loại
             <FaCaretDown />
+            {openList && (
+              <div className="absolute left-0 bottom-0 translate-y-full z-100 bg-amber-300 p-3  w-72 mt-4">
+                <ul className="text-white gap-2 grid grid-cols-2">
+                  <li>the loai 1</li>
+                  <li>the loai 1</li>
+                  <li>the loai 1</li>
+                  <li>the loai 1</li>
+                </ul>
+              </div>
+            )}
           </li>
           <li>Phim lẻ</li>
           <li>Phim bộ</li>

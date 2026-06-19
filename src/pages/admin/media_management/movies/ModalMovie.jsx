@@ -20,6 +20,7 @@ import { ContextActors } from "../../../../contexts/ActorProvider";
 import { ContextMovieTypes } from "../../../../contexts/MovieTypeProvider";
 import { getOjectById } from "../../../../services/reponsitory";
 import { stylebg } from "../../../../utils/StyleContants";
+import { styleModalBg } from "../../../../utils/StyleModalContants";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -124,6 +125,7 @@ export default function ModalMovie({
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
         role="alertdialog"
+        sx={styleModalBg}
       >
         <DialogTitle>
           {" "}
@@ -131,7 +133,7 @@ export default function ModalMovie({
         </DialogTitle>
         <DialogContent
           sx={stylebg}
-          className="grid grid-cols-2 max-md:grid-cols-1 gap-3 "
+          className="grid grid-cols-2 max-md:grid-cols-1 gap-3 items-center "
         >
           <div className="">
             <TextField
@@ -159,7 +161,6 @@ export default function ModalMovie({
             <div className="flex gap-3 items-center">
               <TextField
                 label="Duration"
-                multiline
                 fullWidth
                 name="duration"
                 sx={{ mt: 2 }}
@@ -167,7 +168,6 @@ export default function ModalMovie({
                 value={movie.duration}
                 error={!!error.duration}
                 helperText={error.duration}
-                
               />
               <TextField
                 label="Rent"
@@ -196,13 +196,15 @@ export default function ModalMovie({
                 onChange={hanleChangeInput}
                 sx={{
                   "& .MuiSelect-icon": {
-                    color: "#000",
+                    color: "#fff",
                   },
                 }}
                 value={movie.planID}
               >
                 {plans.map((option) => (
-                  <MenuItem key={option.id} value={option.id}>{option.title}</MenuItem>
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.title}
+                  </MenuItem>
                 ))}
               </TextField>
               <TextField
@@ -212,9 +214,9 @@ export default function ModalMovie({
                 name="typeID"
                 onChange={hanleChangeInput}
                 value={movie.typeID}
-                 sx={{
+                sx={{
                   "& .MuiSelect-icon": {
-                    color: "#000",
+                    color: "#fff",
                   },
                 }}
               >
@@ -232,14 +234,16 @@ export default function ModalMovie({
                 name="author"
                 onChange={hanleChangeInput}
                 value={movie.author}
-                 sx={{
+                sx={{
                   "& .MuiSelect-icon": {
-                    color: "#000",
+                    color: "#fff",
                   },
                 }}
               >
                 {authors.map((option) => (
-                  <MenuItem key={option.id} value={option.id}>{option.name}</MenuItem>
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.name}
+                  </MenuItem>
                 ))}
               </TextField>
               <TextField
@@ -250,9 +254,9 @@ export default function ModalMovie({
                 name="country"
                 onChange={hanleChangeInput}
                 value={movie.country}
-                 sx={{
+                sx={{
                   "& .MuiSelect-icon": {
-                    color: "#000",
+                    color: "#fff",
                   },
                 }}
               >
@@ -266,27 +270,31 @@ export default function ModalMovie({
           </div>
 
           <div>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 text-white">
               <div className="flex flex-col">
                 <div
                   className="flex items-center gap-2 cursor-pointer"
                   onClick={() => handleDataChoose("categories")}
                   value={movie.listCate}
                 >
-                  <h5 className="text-black">Categories</h5>
+                  <h5 className="">Categories</h5>
                   <div className="px-3 py-2 rounded-[5px] bg-slate-900 text-white flex items-center">
                     <MdCategory />
                   </div>
                 </div>
-                <div className="flex gap-2 items-center mt-2">
+                <div className="flex flex-wrap gap-2 items-center mt-2">
                   {movie.listCate.map((id) => (
-                    <div className="relative px-3 py-1 bg-gray-200 border border-gray-400 rounded-md">
-                      <span className="text-sm font-medium text-black ">
+                    <div
+                      key={id}
+                      className="relative px-3 py-2 rounded-lg bg-white/5 backdrop-blur-md border border-white/10 text-white transition-all duration-300 hover:bg-white/10 hover:border-fuchsia-500/30 group"
+                    >
+                      <span className="text-sm font-medium tracking-wide">
                         {getOjectById(categories, id).name}
                       </span>
+
                       <button
                         onClick={() => handleChooes(id, "categories")}
-                        className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs font-bold"
+                        className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center rounded-full bg-linear-to-br from-pink-500 to-red-500 text-white text-xs font-bold shadow-lg shadow-pink-500/30 transition-all duration-200 hover:scale-110"
                       >
                         <IoClose />
                       </button>
@@ -300,7 +308,7 @@ export default function ModalMovie({
                   className="flex items-center gap-2 cursor-pointer"
                   onClick={() => handleDataChoose("actors")}
                 >
-                  <h5 className="text-black">Actors</h5>
+                  <h5 className="">Actors</h5>
                   <div className="px-3 py-2 rounded-[5px] bg-slate-900 text-white flex items-center">
                     <FaUser />
                   </div>
@@ -318,7 +326,7 @@ export default function ModalMovie({
 
                       <button
                         onClick={() => handleChooes(id, "actors")}
-                        className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs font-bold"
+                        className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center rounded-full bg-linear-to-br from-pink-500 to-red-500 text-white text-xs font-bold shadow-lg shadow-pink-500/30 transition-all duration-200 hover:scale-110"
                       >
                         <IoClose />
                       </button>
@@ -332,7 +340,7 @@ export default function ModalMovie({
                   className="flex items-center gap-2"
                   onClick={() => handleDataChoose("characters")}
                 >
-                  <h5 className="text-black">Characters</h5>
+                  <h5 className="">Characters</h5>
                   <div className="px-3 py-2 rounded-[5px] bg-slate-900 text-white flex items-center">
                     <FaUser />
                   </div>
@@ -350,7 +358,7 @@ export default function ModalMovie({
 
                       <button
                         onClick={() => handleChooes(id, "characters")}
-                        className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs font-bold"
+                        className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center rounded-full bg-linear-to-br from-pink-500 to-red-500 text-white text-xs font-bold shadow-lg shadow-pink-500/30 transition-all duration-200 hover:scale-110"
                       >
                         <IoClose />
                       </button>
@@ -359,7 +367,7 @@ export default function ModalMovie({
                 </div>
               </div>
               <div className="mt-4 w-full">
-                <label  className="text-black">Upload image</label>
+                <label className="">Upload image</label>
                 <div className="flex items-center gap-3">
                   <label className="">
                     <input

@@ -1,0 +1,45 @@
+.banner-slider-countries {
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #444;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .banner-slider-countries {
+    width: 100%;
+  }
+
+  .mySwiper {
+    width: 100%;
+  }
+
+  .swiper-slide {
+    height: 250px;
+  }
+
+  .slide-item {
+    width: 100%;
+    height: 100%;
+    background: #333;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

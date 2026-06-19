@@ -2,6 +2,7 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
+import { styleModalBg } from "../../../../utils/StyleModalContants";
 
 export default function ModalChoose({
   openChoose,
@@ -23,6 +24,7 @@ export default function ModalChoose({
         open={openChoose}
         onClose={handleCloseChoose}
         aria-labelledby="responsive-dialog-title"
+        sx={styleModalBg}
       >
         <div className="p-4">
           <div className="flex justify-between">
@@ -39,18 +41,30 @@ export default function ModalChoose({
             {dataChoose.map((e) => (
               <div
                 key={e.id}
-                onClick={() => handleChooes(e.id,type)}
-                className={`inline-flex items-center flex-col px-4 py-2 border border-gray-400 rounded-md cursor-pointer w-fit whitespace-nowrap ${checkChoose(e.id) ? "bg-[#0A0E17] card-active text-white" : "bg-gray-200"}`}
+                onClick={() => handleChooes(e.id, type)}
+                className={`
+    relative inline-flex items-center flex-col
+    px-4 py-3 rounded-xl cursor-pointer
+    transition-all duration-300 ease-out
+    border
+    ${
+      checkChoose(e.id)
+        ? "card-active text-white border-pink-500/30 shadow-lg shadow-pink-500/10"
+        : "bg-white/5 backdrop-blur-md border-white/10 text-slate-200 hover:bg-white/10 hover:border-white/20"
+    }
+  `}
               >
                 {type !== "categories" && (
                   <img
-                    className="rounded-full w-10 h-10 mb-1"
+                    className="rounded-full w-12 h-12 mb-2 object-cover border border-white/10"
                     src={e.imgUrl}
                     alt=""
                   />
                 )}
 
-                <span className="text-sm font-medium">{e.name}</span>
+                <span className="text-sm font-medium tracking-wide">
+                  {e.name}
+                </span>
               </div>
             ))}
           </div>

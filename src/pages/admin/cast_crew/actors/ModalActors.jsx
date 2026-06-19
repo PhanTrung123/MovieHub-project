@@ -7,6 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
+import { styleModalBg } from "../../../../utils/StyleModalContants";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -33,6 +34,7 @@ export default function ModalActors({
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
         role="alertdialog"
+        sx={styleModalBg}
       >
         <DialogTitle>
           {" "}
