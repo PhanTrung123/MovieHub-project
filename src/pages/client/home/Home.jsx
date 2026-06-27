@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../../../components/client/Header';
 import Main from '../main/Main';
 
-function Home(props) {
+function Home() {
     return (
         <div>
             <Header />

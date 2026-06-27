@@ -11,6 +11,9 @@ import PlanProvider from "./contexts/PlanProvider.jsx";
 import MovieTypeProvider from "./contexts/MovieTypeProvider.jsx";
 import MovieProvider from "./contexts/MovieProvider.jsx";
 import EpisodeProvider from "./contexts/EpisodeProvider.jsx";
+import AccountProvider from "./contexts/AccountProvider.jsx";
+import AuthProvider from "./contexts/AuthProvider.jsx";
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -23,7 +26,11 @@ createRoot(document.getElementById("root")).render(
                 <MovieTypeProvider>
                   <MovieProvider>
                     <EpisodeProvider>
-                      <App />
+                     <AccountProvider>
+                      <AuthProvider>
+                       <App />
+                      </AuthProvider>
+                     </AccountProvider>            
                     </EpisodeProvider>
                   </MovieProvider>
                 </MovieTypeProvider>

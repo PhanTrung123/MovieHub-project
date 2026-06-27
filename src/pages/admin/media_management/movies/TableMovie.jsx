@@ -165,7 +165,7 @@ export default function TableMovie({ handleEdit, search }) {
       align: "center",
       headerAlign: "center",
       renderCell: (params) => (
-        <span style={{ color: "#cbd5e1" }}>{params.value} min</span>
+        <span style={{ color: "#cbd5e1" }}>{params.value}</span>
       ),
     },
 

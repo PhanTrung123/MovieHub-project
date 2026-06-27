@@ -1,70 +1,80 @@
 .banner {
-    height: 100vh;
-  .swiper {
-    width: 100%;
-    height: 100%;
-  }
-
-  .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #444;
-
-    /* Center slide text vertically */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 
   .swiper {
     width: 100%;
-    height: 300px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .swiper-slide {
-    background-size: cover;
-    background-position: center;
+    height: 100%;
   }
 
   .mySwiper2 {
-    height: 100%;
     width: 100%;
-  }
+    height: 100%;
 
-  .mySwiper {
-    height: 50px;
-    box-sizing: border-box;
-    padding: 10px 0;
-    position: absolute;
-    bottom: 10%;
-    right: 0px;
-    .swiper-wrapper {
-      justify-content: end;
+    .swiper-slide {
+      overflow: hidden;
+    }
+
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 
-  .mySwiper .swiper-slide {
-    width: 100px !important;
+  .mySwiper {
+    position: absolute;
+    bottom: 8%;
+    right: 3%;
+    width: 50%;
     height: 50px;
-    opacity: 0.4;
-  }
+    overflow: visible;
 
-  .mySwiper .swiper-slide-thumb-active {
-    opacity: 1;
-  }
+    .swiper-wrapper {
+      align-items: center;
+      justify-content: flex-end;
+    }
 
-  .swiper-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    .swiper-slide {
+      width: 120px !important;
+      height: 68px;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+
+      opacity: .45;
+      transform: scale(.92);
+
+      transition: all .35s ease;
+
+      &:hover{
+        border: 2px solid #fff;
+      }
+    }
+
+    .swiper-slide:hover {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+      transition: .35s;
+    }
+
+    .swiper-slide-thumb-active {
+      opacity: 1;
+      transform: scale(1.08);
+      z-index: 10;
+    }
+
+    .swiper-slide-thumb-active img {
+      border: 2px solid #fff;
+      box-shadow: 0 0 20px rgba(255,255,255,.35);
+    }
   }
 }

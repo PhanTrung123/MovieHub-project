@@ -11,7 +11,7 @@ const NavbarAdmin = () => {
 
   return (
     <div
-      className={`px-4 md:h-screen md:pb-4 transition-all duration-500 bg-[#0A0E17] card ${showMenu ? "md:w-64" : "md:w-24"}`}
+      className={`px-4 md:pb-4 min-h-screen transition-all duration-500 bg-[#0A0E17] card ${showMenu ? "md:w-64" : "md:w-24"}`}
     >
       <div className="flex gap-1 items-center text-white justify-center py-5 relative max-md:justify-between">
         <img src="/logo.png" className="h-12" />

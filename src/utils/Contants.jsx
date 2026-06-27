@@ -104,3 +104,56 @@ export const LISTCOUNTRIES = [
 
 export const CLOUNDNAME = "dimz62amt";
 export const UPLOADRESET = "moviehub";
+
+// ---------------------------------- //
+
+export const RATINGMOVIE = [
+  {
+    id: 1,
+    point: 8.9,
+    year: 2026,
+    quality: "4K",
+  },
+  {
+    id: 2,
+    point: 9.2,
+    year: 2025,
+    quality: "HD",
+  },
+  {
+    id: 3,
+    point: 7.8,
+    year: 2024,
+    quality: "Full HD",
+  },
+  {
+    id: 4,
+    point: 7.8,
+    year: 2024,
+    quality: "Full HD",
+  },
+  {
+    id: 5,
+    point: 7.8,
+    year: 2024,
+    quality: "Full HD",
+  },
+  {
+    id: 6,
+    point: 7.8,
+    year: 2024,
+    quality: "Full HD",
+  },
+  {
+    id: 7,
+    point: 7.8,
+    year: 2024,
+    quality: "Full HD",
+  },
+];
+
+export const ROLES = {
+  USER : "user",
+  ADMIN : 'admin',
+  EMPLOYEE: "employee"
+}
